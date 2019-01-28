@@ -1,87 +1,151 @@
-<!doctype html>
+<!DOCTYPE html>
+<!--
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
-{% load pages_tags mezzanine_tags i18n staticfiles %}
+-->
 
+<html>
+
+<!--
+{% load pages_tags mezzanine_tags i18n staticfiles %}
+-->
 <head>
+<!--
 {% block head %}
 {% block meta %}
+-->
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
 <meta name="description" content="{% block meta_description %}{% endblock %}">
+<!--
 {% endblock meta %}
+-->
 <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
 <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
 <link rel="icon" href="{% static "img/favicon.ico" %}">
 <link href="https://fonts.googleapis.com/css?family=Baumans|Open+Sans|Source+Sans+Pro" rel="stylesheet">
-
+<!--
 {% ifinstalled mezzanine.blog %}
+-->
 <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
 <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+<!--
 {% endifinstalled %}
 
 {% compress css %}
+-->
 <!-- reset CSS -->
 <link rel="stylesheet" type="text/css" href="{% static "css/reset.css" %}" media="screen">
 
 <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+<!-- Xoa khi dung Django -->
+<link rel="stylesheet" href="../static/css/bootstrap.css">
+
 <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
 <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
 <!-- iBrokerVN CSS -->
 <link rel="stylesheet" href="{% static "css/style.css" %}" media="screen">
-
+<!-- Xoa khi dung Django -->
+<link rel="stylesheet" href="../static/css/style.css">
+<!--
 {% if LANGUAGE_BIDI %}
+-->
 <link rel="stylesheet" href="{% static "css/bootstrap-rtl.css" %}">
+<!--
 {% endif %}
 {% ifinstalled cartridge.shop %}
+-->
 <link rel="stylesheet" href="{% static "css/cartridge.css" %}">
+<!--
 {% if LANGUAGE_BIDI %}
+-->
 <link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
+<!--
 {% endif %}
 {% endifinstalled %}
 {% block extra_css %}{% endblock %}
 {% endcompress %}
 
 {% compress js %}
+-->
 <!-- CSS tuong thich nhieu trinh duyet-->
 <script scr="{% static "js/prefixfree.min.js"  %}" ></script>
 <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
 <script src="{% static "js/bootstrap.js" %}"></script>
 <script src="{% static "js/bootstrap-extras.js" %}"></script>
+<!--
 {% block extra_js %}{% endblock %}
 {% endcompress %}
-
-<!--[if lt IE 9]>
+-->
+<!--[if lt IE 9]-->
 <script src="{% static "js/html5shiv.js" %}"></script>
 <script src="{% static "js/respond.min.js" %}"></script>
-<![endif]-->
-
+<!--[endif]-->
+<!--
 {% block extra_head %}{% endblock %}
 {% endblock head %} 
+-->
 </head>
 
 <body id="{% block body_id %}body{% endblock %}">
+<!--
 {% block body %}
-	<div id="wrapper">
+-->
+	<div>
+		<!--Header-->
 		<header id="masthead" class="site-header">
-            <div class="inside-header">
-                <h1>
-                    <div class="site-logo">
-
-                    </div>
-                </h1>
-                <div class="header-wiget">
-                </div>
-
+			<!--TopBar-->
+            <div class="topBar">
+            	<div class="topBarInnerWrap">
+            		<div class="topBarLogo">
+            			<a href=""></a>
+            			<img src="../static/img/logotransperent6.png" height="30" alt="iBrokerVN" />
+            		</div>            		
+            	</div>
+            <!--End TopBar--> 	
             </div>
+            <!--NavBar-->
+            <div id="navbar" class="navbar">
+            	<div class="navbarInnerWrap">
+            		<a href="#home">Home</a>
+  					<a href="#news">News</a>
+					<a href="#contact">Contact</a>
+				</div>
+			
+			<!--End NavBar--> 	
+            </div>
+
+        <!--End Header-->    
 		</header>
 
+		<main>
+			
+		</main>
 
+<!--
+                     <img src="../static/img/logotransperent4.png" width="3000" height="500" alt="Hello Kitty" />
+
+-->    
 
 
 
 	<!--end ./wrapper -->
 	</div>
+<!--
 {% endblock body %}
+-->
+<script>
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById("navbar").style.top = "40px";
+  } else {
+    document.getElementById("navbar").style.top = "0px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+</script>
+
 </body>
 </html>
