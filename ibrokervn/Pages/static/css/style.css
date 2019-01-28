@@ -50,7 +50,8 @@ body, html {
 }
 .topBarLogo img {
     height: 80%;
-    margin-bottom: 6px;
+    cursor: pointer;
+    
 }
 
 .topBarInnerWrap, .navbarInnerWrap {
@@ -60,7 +61,7 @@ body, html {
     position: relative;
     font-family: 'Open Sans', Arial, sans-serif;
 
-    font-size:36px;
+    font-size:17px;
     font-weight:300;
     line-height:38px;
     color:#fff;
@@ -74,7 +75,7 @@ body, html {
 
 }
 
-.navbar {
+#navbar {
   background-color: #000;
   position: absolute;
   top: 40px;
@@ -83,22 +84,29 @@ body, html {
   
   transition: top 0.3s;
   border-radius: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
-.navbar a {
+#navbar a {
   float: left;
   display: block;
-  color: white;
+  color: #f2f2f2;
   text-align: center;
-  padding: 15px;
+  padding: 1px 16px;
   text-decoration: none;
+  font-size: 17px;
 }
 
-.navbar a:hover {
+#navbar a:hover {
   background-color: #ddd;
   color: black;
 }
 
+#navbar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
 
 main {
     

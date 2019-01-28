@@ -98,7 +98,7 @@
             <div class="topBar">
             	<div class="topBarInnerWrap">
             		<div class="topBarLogo">
-            			<a href=""></a>
+            			<a href="#abc"></a>
             			<img src="../static/img/logotransperent6.png" height="30" alt="iBrokerVN" />
             		</div>            		
             	</div>
@@ -107,10 +107,13 @@
             <!--NavBar-->
             <div id="navbar" class="navbar">
             	<div class="navbarInnerWrap">
-            		<a href="#home">Home</a>
-  					<a href="#news">News</a>
-					<a href="#contact">Contact</a>
-				</div>
+                <a class="btn active" href="#home">Trang Chủ</a>
+                <a class="btn" href="#Thông Tin">Thông Tin</a>
+                <a class="btn" href="#Sự Kiện">Sự Kiện</a>
+                <a class="btn" href="#Hướng Dẫn ĐT">Hướng Dẫn ĐT</a>
+                <a class="btn" href="#Giới Thiệu">Giới Thiệu</a>
+                <a class="btn" href="#Liên Hệ">Liên Hệ</a>
+				      </div>
 			
 			<!--End NavBar--> 	
             </div>
@@ -144,6 +147,19 @@ var currentScrollPos = window.pageYOffset;
     document.getElementById("navbar").style.top = "0px";
   }
   prevScrollpos = currentScrollPos;
+}
+</script>
+
+<script>
+// Add active class to the current button (highlight it)
+var header = document.getElementById("navbar");
+var btns = header.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(" active", "");
+  this.className += " active";
+  });
 }
 </script>
 
