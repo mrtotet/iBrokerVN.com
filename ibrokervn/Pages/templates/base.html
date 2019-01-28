@@ -5,9 +5,9 @@
 
 <html>
 
-<!--
+
 {% load pages_tags mezzanine_tags i18n staticfiles %}
--->
+
 <head>
 <!--
 {% block head %}
@@ -100,12 +100,17 @@
             		<div class="topBarLogo">
             			<a href="#abc"></a>
             			<img src="../static/img/logotransperent6.png" height="30" alt="iBrokerVN" />
-            		</div>            		
+            		</div>
+                <div class="topBartools">  
+                    {% nevercache %}
+                    {% include "includes/user_panel.html" %}
+                    {% endnevercache %}
+                </div>
             	</div>
             <!--End TopBar--> 	
             </div>
             <!--NavBar-->
-            <div id="navbar" class="navbar">
+            <div id="navbar" class="navbar" role="navigation">
             	<div class="navbarInnerWrap">
                 <a class="btn active" href="#home">Trang Chủ</a>
                 <a class="btn" href="#Thông Tin">Thông Tin</a>
@@ -113,7 +118,14 @@
                 <a class="btn" href="#Hướng Dẫn ĐT">Hướng Dẫn ĐT</a>
                 <a class="btn" href="#Giới Thiệu">Giới Thiệu</a>
                 <a class="btn" href="#Liên Hệ">Liên Hệ</a>
+                
+                
+                {% block navbar_search_form %}{% search_form "all" %}{% endblock %}
+                
 				      </div>
+              
+               
+              </div>
 			
 			<!--End NavBar--> 	
             </div>
@@ -123,6 +135,9 @@
 
 		<main>
 			
+
+
+
 		</main>
 
 <!--
