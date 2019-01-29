@@ -1,4 +1,3 @@
-{% load i18n %}
 {% load mezzanine_tags %}
 
 {% nevercache %}
@@ -12,7 +11,7 @@
 {% else %}
 <div class="form-group input_{{ field.id_for_label }} {{ field.field.type }}
     {% if field.errors %} has-error{% endif %}">
-    {% if field.label %}<label class="control-label" for="{{ field.auto_id }}">{{ field.label }}</label>{% endif %}
+    
     {{ field }}
     {% if field.errors %}
     <p class="help-block">
@@ -22,8 +21,6 @@
     </p>
     {% elif field.help_text %}
     <p class="help-block">{{ field.help_text }}</p>
-    {% elif field.field.required %}
-    <p class="help-block">{% trans "required" %}</p>
     {% endif %}
 </div>
 {% endif %}

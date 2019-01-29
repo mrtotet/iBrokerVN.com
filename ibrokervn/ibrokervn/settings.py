@@ -234,7 +234,8 @@ if DJANGO_VERSION < (1, 9):
 ################
 
 INSTALLED_APPS = (
-    #"Pages",
+
+    "Pages",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -253,6 +254,7 @@ INSTALLED_APPS = (
     "mezzanine.galleries",
     "mezzanine.twitter",
     "mezzanine.accounts",
+
 )
 
 # List of middleware classes to use. Order is important; in the request phase,
