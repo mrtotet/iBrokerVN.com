@@ -19,7 +19,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
   
   {% ifinstalled mezzanine.blog %}
-  -->
+
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
   <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
   
@@ -84,7 +84,7 @@
 <body id="{% block body_id %}body{% endblock %}">
 {% block body %}
 
-	<div class="wrapper">
+	<div class="wrap">
 		<!--Header-->
 		<header >
 		<!--TopBar-->
@@ -94,47 +94,55 @@
       			<a href="#abc"></a>
       			<img src="{% static "img/logotransperent6.png" %}" height="30" alt="iBrokerVN" />
       		</div>
-          <div class="topBartools">  
+          <div class="topBartools">
               {% nevercache %}
               {% include "includes/user_panel.html" %}
               {% endnevercache %}
           </div>
       	</div>
-      <!--End TopBar--> 	
+      <!--End TopBar-->
       </div>
       <!--NavBar-->
-      <div id="navbar" class="navbar" role="navigation">
+      <div id="navbara" class="navbara" role="navigation">
       	<div class="navbarInnerWrap">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">{% trans "Toggle Navigation" %}</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
-          </div>
+      	  	<div class="navbar navbar-default" role="navigation">	
+      	  		<div class="container">
+          		<div class="navbar-header">
+		
+		
+          		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          		      <span class="sr-only">{% trans "Toggle Navigation" %}</span>
+          		      <span class="icon-bar"></span>
+          		      <span class="icon-bar"></span>
+          		      <span class="icon-bar"></span>
+          		  </button>
+		
+          		</div>
 
           
-            <!--
-            <a class="btn active" href="#home">Trang Chủ</a>
-            <a class="btn" href="#Thông Tin">Thông Tin</a>
-            <a class="btn" href="#Sự Kiện">Sự Kiện</a>
-            <a class="btn" href="#Hướng Dẫn ĐT">Hướng Dẫn ĐT</a>
-            <a class="btn" href="#Giới Thiệu">Giới Thiệu</a>
-            <a class="btn" href="#Liên Hệ">Liên Hệ</a>
-
-            -->
-            {% block navbar_dropdown_menu %}{% page_menu "pages/menus/dropdown.html" %}{% endblock%}
-            {% block navbar_search_form %}{% search_form "all" %}{% endblock %}
+            	<!--
+            	<a class="btn active" href="#home">Trang Chủ</a>
+            	<a class="btn" href="#Thông Tin">Thông Tin</a>
+            	<a class="btn" href="#Sự Kiện">Sự Kiện</a>
+            	<a class="btn" href="#Hướng Dẫn ĐT">Hướng Dẫn ĐT</a>
+            	<a class="btn" href="#Giới Thiệu">Giới Thiệu</a>
+            	<a class="btn" href="#Liên Hệ">Liên Hệ</a>
+	
+            	-->
+           	
+            	{% block navbar_dropdown_menu %}{% page_menu "pages/menus/dropdown.html" %}{% endblock%}
+            	
+            	{% block navbar_search_form %}{% search_form "all" %}{% endblock %}
           
-          <div>
+          
             
-          </div>
+          	</div>
 
-			 </div>         
+
+		</div>   
+		</div>      
       </div>
-			<!--End NavBar--> 	
+	<!--End NavBar-->
     <!--End Header-->    
 		</header>
 
@@ -178,14 +186,14 @@
   window.onscroll = function() {
   var currentScrollPos = window.pageYOffset;
     if (prevScrollpos > currentScrollPos) {
-      document.getElementById("navbar").style.top = "40px";
+      document.getElementById("navbara").style.top = "40px";
     } else {
-      document.getElementById("navbar").style.top = "0px";
+      document.getElementById("navbara").style.top = "-50px";
     }
     prevScrollpos = currentScrollPos;
     }
   </script>
-
+<!--
   <script>
   // Add active class to the current button (highlight it)
   var header = document.getElementById("navbar");
@@ -198,6 +206,7 @@
     });
   }
   </script>
+ -->
 
 -->
 
