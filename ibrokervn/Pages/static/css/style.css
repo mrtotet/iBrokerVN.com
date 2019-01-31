@@ -10,8 +10,7 @@ body, html {
 }
 
 .wrap{
-    width:970px;
-	position: relative;
+    position: relative;
 	margin:0 auto;
 	padding: 100px 0 0;
 }
@@ -25,11 +24,15 @@ header {
     left:0;
     z-index:8;
 }
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
 
 .topBar {
-    background-color: #000;
+
     align-items: center;
-    height: 40px;
+    height: 50px;
     width: 100%;
     position: relative;
     top:0;
@@ -40,7 +43,7 @@ header {
 
 .topBarInnerWrap {
     max-width: 1600px;   
-    height: 80%;
+    height: 100%;
     margin:0 auto;
     position: relative;
     vertical-align: middle;
@@ -48,27 +51,32 @@ header {
 }
 
 .topBarLogo {
-    height: 100%;
-    display: inline-block;
-    position: absolute;
-    left: 1%;
+    height: 600px;
+    
+   
+    padding: auto;
+
 }
 
 
 .topBarLogo img {
-    height: 100%;
-    cursor: pointer;    
+    max-width: 40%;
+    height: auto;
+    display: block
+    cursor: pointer;
+    margin: : auto;
 }
+
 
 
 .topBartools {
   position: absolute;  
-  right: 1%;
+  right:0;
   overflow-x: hidden;
   overflow-y: hidden;
 }
 
-
+/*
 
 .navbara {
   background-color: #000;
@@ -82,36 +90,64 @@ header {
   z-index:0;
 }
 
-.navbarInnerWrap {
+.navbar {
     max-width: 1600px;   
-    height: 80%;
+    height: 100%;
     margin:0 auto;
     font-size:17px;
     font-weight:300;
     line-height:38px;
 }
+.container{
+    height: 100%;
+}
 
-.navbara a {
+.navbar-collapse {
+    height: 38px;
+}
+
+.collapse{
+    height: 38px;
+}
+
+.nav {
+    height: 38px;
+}
+.navbar-nav {
+    height: 38px;
+}
+
+@media (min-width: 992px) {
+  .navbar .container {width:970px;}
+}
+@media (min-width: 1200px) {
+  .navbar .container {width:1170px;}
+}
+
+@media (min-width: 1600px) {
+  .navbar .container {width:1600px;}
+}
+/*
+.navbar a {
   float: left;
   display: block;
-  color: #f2f2f2;
+  color: #f2f2f2;s
   text-align: center;
   padding: 1px 16px;
   text-decoration: none;
   font-size: 17px;
   margin: 0;
+  height: 30px;
 }
 
-.navbara a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.navbara a.active {
+.navbar a.active {
   background-color: #4CAF50;
   color: white;
 }
-
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
 
 .navbar-form {
   margin: 0;
