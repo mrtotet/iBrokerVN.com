@@ -234,8 +234,12 @@ if DJANGO_VERSION < (1, 9):
 ################
 
 INSTALLED_APPS = (
+    #"Pages",
+    #"flat",
+    # "moderna",
+    # "nova",
+    # "solid",
 
-    "Pages",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -244,16 +248,27 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
+
     "mezzanine.boot",
     "mezzanine.conf",
-    "mezzanine.core",
+
     "mezzanine.generic",
+    "mezzanine.accounts",
     "mezzanine.pages",
+
     "mezzanine.blog",
     "mezzanine.forms",
     "mezzanine.galleries",
     "mezzanine.twitter",
-    "mezzanine.accounts",
+
+    "Pages",
+
+
+    "mezzanine.core",
+
+
+
+    #"mezzanine.mobile",
 
 )
 

@@ -31,10 +31,11 @@ ul, ol {
 .navbar-text {
   font-style: italic;
   font-size: 11px;
-  color: #aaa !important;
+  color: #fff !important;
   line-height: 100%;
   padding-top: 5px;
-  margin:15px 20px 0 5px;
+  margin:38px 20px 0 5px;
+
 }
 .navbar-form.navbar-right {
   padding-right: 0;
