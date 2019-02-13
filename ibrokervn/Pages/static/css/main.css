@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,700,300);
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400|Roboto:300,400|Source+Sans+Pro:300,400');
 .clearfix {
   *zoom: 1;
 }
@@ -726,6 +726,7 @@ ul.tag-cloud li {
   padding-bottom: 7px;
   border-radius: 4px;
   color: #bdc3c7;
+  
 }
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover,
@@ -747,6 +748,7 @@ ul.tag-cloud li {
 .navbar-inverse .navbar-nav .dropdown-menu > li > a {
   padding: 8px 15px;
   color: #bdc3c7;
+
 }
 .navbar-inverse .navbar-nav .dropdown-menu > li:hover > a,
 .navbar-inverse .navbar-nav .dropdown-menu > li:focus > a,

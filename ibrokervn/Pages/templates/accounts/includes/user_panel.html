@@ -9,7 +9,7 @@
     </li>
     <li>
         <a href="{% url "profile_update" %}" class="">
- <i class="icon-edit"></i> {% trans "Update profile" %}</a>
+ <i class="icon-edit"></i> {% trans "Cập nhật thông tin" %}</a>
             
     {% else %}
         <a href="{% url "profile_update" %}">{{ request.user|username_or:"email" }}</a>
@@ -19,14 +19,14 @@
      </li>
     <li>
     <a href="{% url "logout" %}?next={{ request.path }}" class="">
-         <i class="icon-signout"></i> {% trans "Log out" %}</a>
+         <i class="icon-signout"></i> {% trans "Đăng xuất" %}</a>
         </li>
 {% else %}
 <li>
     <a href="{% url "login" %}?next={{ request.path }}" class="">
-        <i class="icon-signin"></i> {% trans "Log in" %}</a>
+        <i class="icon-signin"></i> {% trans "Đăng nhập" %}</a>
    
     <a href="{% url "signup" %}?next={{ request.path }}" class="">
-         <i class="icon-edit"></i> {% trans "Sign up" %}</a>
+         <i class="icon-edit"></i> {% trans "Đăng ký" %}</a>
         </li>
 {% endif %}
