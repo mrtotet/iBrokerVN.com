@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags mezzanine_tags i18n staticfiles %}
+
+<head>
+  {% block head %}
+    {% block meta %}
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    {% endblock meta %}
+
+  <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %}{{ settings.SITE_TITLE }}{% endif %} | {% block title %}{% endblock %}</title>    
+
+    <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+    <link rel="icon" href="{% static "img/favicon.ico" %}"> 
+
+    {% block stylesheets %}
+    
+      <link href="{% static "css/reset.css" %}" rel="stylesheet">
+  
+      <!-- Bootstrap -->
+      <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
+      <!-- Font Awesome -->
+       <link href="{% static "css/font-awesome1.min.css" %}" rel="stylesheet">
+      
+
+      <!-- Ionicons -->
+      <link href="{% static "css/ionicons.min.css" %}" rel="stylesheet">    
+      <!-- AdminLTE.css -->
+      <link href="{% static "css/AdminLTE.min.css" %}" rel="stylesheet"> 
+
+      <!-- Google Font -->
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+      <!--Custom AdminLTE Skins. We have chosen the skin-blue for this starter
+      page. However, you can choose any other skin. Make sure you
+      apply the skin class to the body tag so the changes take effect. -->
+
+      <link href="{% static "css/skins/skin-green.min.css" %}" rel="stylesheet">
+      <link href="{% static "css/toidautu.css" %}" rel="stylesheet">
+      <!--[if lt IE 9]>
+        <script src="{% static "js/html5shiv.js" %}"></script>
+        <script src="{% static "js/respond.min.js" %}"></script>
+      <![endif]-->
+
+
+    {% endblock stylesheets %}  
+
+
+  {% endblock head %} 
+
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+
+
+<body class="{% block body_class %}hold-transition skin-green sidebar-mini {% endblock body_class %} ">
+{% block body %}
+  <div class="wrapper">
+    <!-- Main HEADER -->
+      {% block top_navigation %}
+        <header class="main-header">
+          {% include "top_navigation.html" %}
+        </header>
+      {% endblock top_navigation %}
+    <!--End Main HEADER -->  
+
+    <!-- Left side column. contains the logo and sidebar -->
+      {% block sidebar %}
+      <aside class="main-sidebar">
+        {% include "sidebar.html" %}        
+      </aside>
+      {% endblock sidebar %} 
+    <!--End Main SIDEBAR --> 
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <section class="content container-fluid">
+          {% block content %}
+            <!--------------------------
+            | Your Page Content Here |
+            -------------------------->
+          {% endblock content %} 
+        <!-- END Main content -->        
+        </section>
+    <!--END content-wrapper -->  
+    </div>
+
+    <!-- Main Footer -->
+    {% block footer %} 
+      <footer class="main-footer">
+        {% include "footer.html" %}
+      </footer>
+    {% endblock footer %}  
+    <!--END Main Footer -->    
+
+  </div>
+
+    {% block Control_Sidebar %}
+      {% include "Control_Sidebar.html" %}
+    {% endblock Control_Sidebar %} 
+    
+      
+    </div>
+<!-- ./wrapper -->
+
+{% block javascripts %}
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 3 -->
+<script src="{% static "js/jquery.min.js" %}"></script>
+
+<!-- Bootstrap 3.3.7 -->
+<script src="{% static "js/bootstrap1.min.js" %}"></script>
+
+<!-- AdminLTE App -->
+<script src="{% static "js/adminlte.min.js" %}"></script>
+
+
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+{% endblock javascripts %}
+
+{% endblock body %}  
+</body>

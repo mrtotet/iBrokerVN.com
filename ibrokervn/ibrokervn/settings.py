@@ -127,6 +127,9 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
+USE_L10N = True
+USE_THOUSAND_SEPARATOR = True
+
 USE_I18N = False
 
 AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
@@ -261,10 +264,19 @@ INSTALLED_APPS = (
     "mezzanine.galleries",
     "mezzanine.twitter",
 
+
+    "Vimo",
+
+    "GDNN",
+    "Stock_detail",
+    
     "Pages",
 
 
+
     "mezzanine.core",
+
+    "toidautu",
 
 
 
@@ -358,3 +370,9 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
+
+FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
+                        "django_excel.TemporaryExcelFileUploadHandler")
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
+
