@@ -17,9 +17,9 @@ urlpatterns = i18n_patterns(
     # Change the admin prefix here to use an alternate URL for the
     # admin interface, which would be marginally more secure.
     url("^admin/", include(admin.site.urls)),
-    url(r'^toidautu/giaodichNN', include('GDNN.urls')),
+    url(r'^toidautu/giaodichNN/', include('GDNN.urls')),
     url(r'^toidautu/thongtinvimo/', include('Vimo.urls')),
-    url(r'^toidautu/stock_detail/', include('Stock_detail.urls',namespace='Stock_detail_1',app_name='Stock_detail'))
+    url(r'^toidautu/nhandinhthitruong/', include('DexuatGD.urls',namespace='nhandinhthitruong',app_name='DexuatGD'))
 
 )
 

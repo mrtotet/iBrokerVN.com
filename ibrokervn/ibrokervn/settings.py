@@ -242,7 +242,6 @@ INSTALLED_APPS = (
     # "moderna",
     # "nova",
     # "solid",
-
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -251,31 +250,20 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
-
     "mezzanine.boot",
     "mezzanine.conf",
-
     "mezzanine.generic",
     "mezzanine.accounts",
     "mezzanine.pages",
-
     "mezzanine.blog",
     "mezzanine.forms",
     "mezzanine.galleries",
     "mezzanine.twitter",
-
-
     "Vimo",
-
     "GDNN",
-    "Stock_detail",
-    
+    "DexuatGD",
     "Pages",
-
-
-
     "mezzanine.core",
-
     "toidautu",
 
 

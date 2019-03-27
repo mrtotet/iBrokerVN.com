@@ -1,0 +1,95 @@
+{% extends "base_toidautu.html" %}
+{% load toidautu_tags %}
+{% load mezzanine_tags comment_tags keyword_tags rating_tags i18n disqus_tags %}
+{% load staticfiles %}
+{% block title1 %} CHIẾN LƯỢC GIAO DỊCH {% endblock title1 %}
+
+
+{% block stylesheets %}
+
+  {{ block.super }}
+  <script src="{% static "js/gauge.js" %}"></script>
+  
+
+  
+  
+{% endblock stylesheets %}
+
+{% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Nhận định TT & Đề xuất GD
+    <small>Bạn đang xem cập nhật mới nhất: {{Post_moinhat_1.publish_date|date:"H:i a d/m/y"}}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="chienluocgiaodich"><i class="fa fa-home"></i> chienluocGD</a></li>
+    <li class="active">Here</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+<div class="row">  <!-- Để co margin trái phải lại -15px -->
+<div class="row">  <!-- Để co margin trái phải lại -15px -->
+
+
+  <!-- CỘT TRÁI -->      
+  <div class="col-md-6" >
+    <div class="box box-info box-solid">
+      <div class="box-header with-border">
+        <h3 class="box-title">NHẬN ĐỊNH THỊ TRƯỜNG</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body ">  
+        {% block title %}
+        <h4 style="margin-top: 0px;">
+        {% editable Post_moinhat_1.title %}{{ Post_moinhat_1.title }}{% endeditable %}
+        </h1>
+        {% endblock %}
+        <-- CONTENT -->
+      </div>
+      <!-- /.box-body -->              
+    </div>
+    <!-- /.box -->
+  </div>
+  <!-- /.col -->
+  
+
+
+    <!-- CỘT PHẢI -->      
+  <div class="col-md-6" >
+    <div class="box box-info box-solid">
+      <div class="box-header with-border">
+        <h3 class="box-title">ĐÁNH GIÁ VN INDEX</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body no-padding">  
+        <-- CONTENT -->
+      </div>
+      <!-- /.box-body -->              
+    </div>
+    <!-- /.box -->
+  </div>
+  <!-- /.col -->
+  </div>    
+
+
+
+
+</div><!-- Kết thúc row -->
+</div><!-- Kết thúc row -->
+</section>
+<!-- /.content -->
+
+          
+
+{% endblock content %}
+
+{% block javascripts %}
+  {{ block.super}}
+<!-- REQUIRED JS SCRIPTS -->
+
+
+{% endblock javascripts %}

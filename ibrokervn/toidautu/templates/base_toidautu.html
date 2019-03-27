@@ -19,10 +19,15 @@
     {% block stylesheets %}
     
       <link href="{% static "css/reset.css" %}" rel="stylesheet">
+
   
       <!-- Bootstrap -->
       <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
-
+     
+      <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
+      {% if LANGUAGE_BIDI %}
+      <link rel="stylesheet" href="{% static "css/bootstrap-rtl.css" %}">
+      {% endif %}
       <!-- Font Awesome -->
        <link href="{% static "css/font-awesome1.min.css" %}" rel="stylesheet">
       
@@ -49,6 +54,12 @@
 
 
     {% endblock stylesheets %}  
+    {% compress js %}
+    <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <script src="{% static "js/bootstrap-extras.js" %}"></script>
+    {% block extra_js %}{% endblock %}
+    {% endcompress %}
 
 
   {% endblock head %} 
@@ -115,6 +126,8 @@ desired effect
       <footer class="main-footer">
         {% include "footer.html" %}
       </footer>
+
+
     {% endblock footer %}  
     <!--END Main Footer -->    
 
@@ -147,4 +160,11 @@ desired effect
 {% endblock javascripts %}
 
 {% endblock body %}  
+
+{% block footer_js %}
+      {% include "includes/footer_scripts.html" %}
+{% endblock %}
+
 </body>
+
+</html>
