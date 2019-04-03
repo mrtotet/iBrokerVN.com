@@ -89,6 +89,11 @@ def TKgdnn(request):
     GTGDTTRong20days = Post20.aggregate(total=Sum('Val_TT_Rong'))
     GTGDTTRong40days = Post40.aggregate(total=Sum('Val_TT_Rong'))
     GTGDTTRong60days = Post60.aggregate(total=Sum('Val_TT_Rong'))
+
+    views = get_object_or_404(Viewed)
+    views.viewed_gdnn +=1
+    views.save()
+
     template = "pages/toidautu/giaodichNN.html"
     context = { 'Name': Name,
                 'Post':Post,
@@ -108,13 +113,12 @@ def TKgdnn(request):
                 'GTGDTTRong20days': GTGDTTRong20days,
                 'GTGDTTRong40days': GTGDTTRong40days,
                 'GTGDTTRong60days': GTGDTTRong60days,
+                'views': views,
                }
 
     return render(request,template,
                   context)
-    views = get_object_or_404(Viewed)
-    views.viewed_gdnn +=1
-    views.save()
+
 
     """
     Post5 = GDNN.order_by('-id')[:5]

@@ -1,5 +1,6 @@
 <!-- sidebar: style can be found in sidebar.less -->
 {% load staticfiles %}
+{% load toidautu_tags %}
 
 
         <section class="sidebar">
@@ -28,13 +29,13 @@
             </div>
           </form>
           <!-- /.search form -->
-    
+{% linkrecommendmoinhat as recommendmoinhat %}
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu" data-widget="tree">
             <li class="header">DANH MỤC</li>
             <!-- Optionally, you can add icons to the links -->
             <li  class="active"><a href="../tonghopthongtin/"><i class="fa fa-home"></i> <span><TABLE>Tổng Hợp Thông Tin</TABLE></span></a></li>
-            <li><a href="../nhandinhthitruong/"><i class="fa fa-rocket"></i> <span>Nhận định TT & Đề xuất GD</span></a></li>
+            <li><a href="{{recommendmoinhat.get_absolute_url}}"><i class="fa fa-rocket"></i> <span>Nhận định TT & Đề xuất GD</span></a></li>
             <li><a href="../thongtinvimo/"><i class="fa fa-table"></i> <span>TT Vĩ mô</span></a></li>
             <li><a href="../giaodichNN/"><i class="fa fa-globe"></i> <span>GD NDT Nước Ngoài</span></a></li>
             <li><a href="../phantichcophieu/"><i class="fa fa-bar-chart"></i> <span>Phân tích cổ phiếu</span></a></li>

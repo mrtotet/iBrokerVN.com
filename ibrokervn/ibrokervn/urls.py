@@ -19,7 +19,7 @@ urlpatterns = i18n_patterns(
     url("^admin/", include(admin.site.urls)),
     url(r'^toidautu/giaodichNN/', include('GDNN.urls')),
     url(r'^toidautu/thongtinvimo/', include('Vimo.urls')),
-    url(r'^toidautu/nhandinhthitruong/', include('DexuatGD.urls',namespace='nhandinhthitruong',app_name='DexuatGD'))
+    url(r'^toidautu/', include('DexuatGD.urls',namespace='nhandinhthitruong',app_name='DexuatGD'))
 
 )
 

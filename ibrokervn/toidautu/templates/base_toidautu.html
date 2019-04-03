@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
 {% load pages_tags mezzanine_tags i18n staticfiles %}
+{% load toidautu_tags %}
 
 <head>
   {% block head %}
@@ -8,10 +9,15 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
-    <meta name="description" content="{% block meta_description %}{% endblock %}">
+
+    <meta property="og:url"           content="https://www.ibrokervn.com" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{    settings.SITE_TITLE }}{% endif %}" />
+    <meta property="og:description"   content="{% block meta_description %}{% endblock %}" />
+    <meta property="og:image"         content="https://www.ibrokervn.com/image.jpg" />
     {% endblock meta %}
 
-  <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %}{{ settings.SITE_TITLE }}{% endif %} | {% block title %}{% endblock %}</title>    
+  <title>{% block title %}{% endblock %} | {% if settings.SITE_TITLE %}{{ settings.SITE_TITLE }}{% endif %}</title>    
 
     <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
     <link rel="icon" href="{% static "img/favicon.ico" %}"> 
@@ -35,7 +41,7 @@
       <!-- Ionicons -->
       <link href="{% static "css/ionicons.min.css" %}" rel="stylesheet">    
       <!-- AdminLTE.css -->
-      <link href="{% static "css/AdminLTE.min.css" %}" rel="stylesheet"> 
+      <link href="{% static "css/AdminLTE.css" %}" rel="stylesheet"> 
 
       <!-- Google Font -->
       <link rel="stylesheet"
@@ -58,6 +64,7 @@
     <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
     <script src="{% static "js/bootstrap.js" %}"></script>
     <script src="{% static "js/bootstrap-extras.js" %}"></script>
+    <script src="https://sp.zalo.me/plugins/sdk.js"></script>
     {% block extra_js %}{% endblock %}
     {% endcompress %}
 
@@ -88,6 +95,9 @@ desired effect
 
 
 <body class="{% block body_class %}hold-transition skin-green sidebar-mini {% endblock body_class %} ">
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.2&appId=1129257863825756&autoLogAppEvents=1"></script>
+
 {% block body %}
   <div class="wrapper">
     <!-- Main HEADER -->
@@ -101,7 +111,9 @@ desired effect
     <!-- Left side column. contains the logo and sidebar -->
       {% block sidebar %}
       <aside class="main-sidebar">
-        {% include "sidebar.html" %}        
+
+     
+     {% include "sidebar.html" %} 
       </aside>
       {% endblock sidebar %} 
     <!--End Main SIDEBAR --> 
@@ -139,6 +151,9 @@ desired effect
     
       
     </div>
+
+
+
 <!-- ./wrapper -->
 
 {% block javascripts %}

@@ -55,4 +55,4 @@ class GDNN(models.Model):
 
 # Theo doi viewed tren cac trang
 class Viewed(models.Model):
-    viewed_gdnn = models.IntegerField(default=0)
+    viewed_gdnn = models.BigIntegerField(default=0)

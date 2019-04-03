@@ -76,8 +76,8 @@ class Estimate (models.Model):
                         ('Close', 'Đóng vị thế GD')       )
 
 
-    STYLE_CHOICES =             (   ('Longterm', 'Dài hạn'),
-                                ('Shorterm', 'Ngắn hạn'),
+    STYLE_CHOICES =             (   ('Dài hạn', 'Dài hạn'),
+                                ('Ngắn hạn', 'Ngắn hạn'),
                              )
     title =             models.CharField(max_length=250, blank= True, null= True)
     Stock =       models.ForeignKey(Stock_Detail,related_name='estimate_Com',unique=True, on_delete=models.CASCADE)
@@ -193,6 +193,26 @@ class Recommend(Displayable, Ownable, RichText, AdminThumbMixin):
     Stock_chosen =  models.ManyToManyField(Estimate, through= 'Update_Trade', verbose_name="Chọn CP", blank=True,related_name="Recommend")
     Streng =    models.IntegerField("Độ mạnh",null=True, blank=True, validators = [MaxValueValidator(100),MinValueValidator(0)], help_text='0-100')
     #Judgement = models.TextField("Đề xuất GD", max_length=2000, blank=True, null=True)
+    @staticmethod
+    def sohoa(a):
+        So = int(a)
+        if So >= 80:
+            Do_manh= "RẤT MẠNH"
+        elif So >= 70:
+            Do_manh = "MẠNH"
+        elif So >= 60:
+            Do_manh = "KHÁ MẠNH"
+        elif So >= 40:
+            Do_manh = "TRUNG BÌNH"
+        elif So >= 30:
+            Do_manh = "YẾU"
+
+        else:
+            Do_manh = "RẤT YẾU"
+        return Do_manh
+    def do_manh(self):
+        return self.sohoa(self.Streng)
+
     categories = models.ManyToManyField("Recommend_Category",
                                         verbose_name="Categories",
                                         blank=True, related_name="Recommends")
@@ -200,7 +220,7 @@ class Recommend(Displayable, Ownable, RichText, AdminThumbMixin):
                                          default=True)
     comments = CommentsField(verbose_name="Còn bạn nhận định thế nào về TT ?")
     rating = RatingField(verbose_name="Rating")
-    viewed =        models.IntegerField(default=0)
+    viewed = models.IntegerField(default=0)
     def get_absolute_url(self):
         """
         URLs for blog posts can either be just their slug, or prefixed
@@ -267,10 +287,18 @@ class Choice(models.Model):
         return self.choice_text
 """
 class NganhdandatTT (models.Model):
-    NgayRecommend = models.ForeignKey(Recommend, on_delete=models.CASCADE)
+    NgayRecommend = models.ForeignKey(Recommend, on_delete=models.CASCADE,)
     Nganh = models.CharField(max_length=200)
     Mucdo = models.IntegerField("Độ mạnh",default=0,null=True, blank=True, validators = [MaxValueValidator(100),MinValueValidator(0)], help_text='0-100')
     CP_noibat = models.CharField(max_length=200)
+    Mau_CHOICES =             (   ('red','Đỏ'),
+                                ( 'yellow','Vàng',),
+                                ('green','Xanh lá'),
+                                ('blue','Xanh da trời'),
+                                  )
+    Mau = models.CharField(max_length=10,
+                                        choices=Mau_CHOICES,
+                                        blank= True,null=True)
     def __str__(self):
         return self. Nganh
 
@@ -287,15 +315,15 @@ class Update_Trade (models.Model):
                                         default='draft',null=True)
     objects = models.Manager()  # The default manager.
     published = PublishedManager()  # The Dahl-specific manager.
-    Stock =       models.ForeignKey(Estimate,related_name='Update_Trade',unique = True, on_delete=models.CASCADE)
+    Stock =       models.ForeignKey(Estimate,related_name='estimate',unique = True, on_delete=models.CASCADE)
     DateRecommend = models.ForeignKey(Recommend, on_delete=models.CASCADE, blank=True, null=True)
-    GD_CHOICES =             (   ('Buy', 'Mua mới'),
+    GD_CHOICES =             (   ('Mua mới', 'Mua mới'),
                                 ('Buy_More', 'Mua thêm'),
-                                ('Hold', 'Nắm  giữ'),
-                                ('Take_profit', 'Chốt lời'),
-                                ('Cut_loss', 'Cắt lỗ'),
-                                ('Sell_a_portion', 'Bán bớt'),
-                                ('Sell_all', 'Bán hết')     )
+                                ('Nắm  giữ', 'Nắm  giữ'),
+                                ('Chốt lời', 'Chốt lời'),
+                                ('Cắt lỗ', 'Cắt lỗ'),
+                                ('Bán bớt', 'Bán bớt'),
+                                ('Bán hết', 'Bán hết')     )
     Trade=                  models.CharField(max_length=10,
                                         choices=GD_CHOICES,
                                              blank=True,null=True)
@@ -303,15 +331,28 @@ class Update_Trade (models.Model):
     Price_update=           models.IntegerField("Giá cập nhật",default=1,null=True, blank=True)
     Indicator =             models.IntegerField(default=50, null=True, blank=True, validators = [MaxValueValidator(100),MinValueValidator(0)])
     action =                models.TextField("Đề xuất GD", max_length=2000, blank=True, null=True)
+
     @staticmethod
     def Cal_Gain_loss(a, b):
         Cal = ((a-b)*100/a)
         return Cal
 
     def Gain_Loss(self):
-        return self.Cal_Gain_loss(self.Price_open, self.Price_update)
-    def __str__(self):
-        return self.title
+        gain_loss = self.Cal_Gain_loss(self.Price_open, self.Price_update)
+        if gain_loss >=0 :
+            color = "green"
+        else:
+            color = "red"
+        return gain_loss,color
+
+
+
+
+
+
+
+
+
 
 
 """

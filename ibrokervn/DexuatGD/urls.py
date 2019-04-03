@@ -20,5 +20,5 @@ urlpatterns = [
     url("^(?P<slug>.*)%s$" % _slash, views.Nhandinh_detail_moinhat, name='daily'),
 
     url(r'import_Doanhnghiep', views.import_Stock_basic_info , name='index'),
-    url("^$", views.Nhandinh_detail_moinhat, name="nhandinh_detail_moinhat"),
+    #url("^$", views.Nhandinh_detail_moinhat, name="nhandinh_detail_moinhat"),
       ]

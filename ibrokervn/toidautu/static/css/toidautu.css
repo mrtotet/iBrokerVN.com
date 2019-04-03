@@ -34,4 +34,40 @@
      margin-right: auto;
  }
 
+ .content-header {
+    margin: 0; 
+    color: #003a5c;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-bottom: solid 1px #d0d2da;
+    margin-right: 25px;
+}
 
+.content-title {
+    font-size: 1.125em;
+    color: #014993;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 40px;
+    border-bottom: solid 1px #d0d2da;
+}
+
+.facebook-like {
+    position: relative;
+    float: right;
+    top: -10px;
+}
+
+.facebook-share {
+      position: relative;
+      display: block;  
+      float: right;
+      margin-top: -22px;
+      padding-top: 5px; 
+      }
+
+.fb-share-button {
+      position: absolute;
+      display: block; 
+      top: -6px; 
+      }

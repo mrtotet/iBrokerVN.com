@@ -9,12 +9,12 @@ from Vimo.models import Vimo
 def Vimosimple():
 
     ConAH = Vimo.objects.filter(DangAH=1).order_by('-Mucdo')
-    return {'ConAH': ConAH }
+    return {'ConAH': ConAH, }
 
 
 from django.db.models import Sum
 
-from GDNN.models import GDNN
+from GDNN.models import GDNN, Viewed
 # Create your views here.
 @register.inclusion_tag('TKgdnn.html')
 def TKgdnn():
@@ -37,6 +37,7 @@ def TKgdnn():
     GTGDTTRong40days = Post40.aggregate(total=Sum('Val_TT_Rong'))
     GTGDTTRong60days = Post60.aggregate(total=Sum('Val_TT_Rong'))
 
+
     context = { 'Name': Name,
                 'Post':Post,
                 'Post5': Post5,
@@ -55,8 +56,15 @@ def TKgdnn():
                 'GTGDTTRong20days': GTGDTTRong20days,
                 'GTGDTTRong40days': GTGDTTRong40days,
                 'GTGDTTRong60days': GTGDTTRong60days,
+
                }
 
     return context
 
+from DexuatGD.models import Recommend
 
+@register.simple_tag
+def linkrecommendmoinhat():
+    Nhandinh_posts = Recommend.objects.published()
+    Post_moinhat_1 = Nhandinh_posts.latest('publish_date')
+    return Post_moinhat_1

@@ -2,17 +2,25 @@
 {% load toidautu_tags %}
 {% load mezzanine_tags comment_tags keyword_tags rating_tags i18n disqus_tags %}
 {% load staticfiles %}
-{% block title1 %} CHIẾN LƯỢC GIAO DỊCH {% endblock title1 %}
+{% block meta_title %}{{ Post_moinhat_1.meta_title }}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for Post_moinhat_1 as tags %}
+{% for tag in tags %}{% if not forloop.first %}, {% endif %}{{ tag }}{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ Post_moinhat_1.description }}
+{% endmetablock %}{% endblock %}
+
+{% block title %} NHẬN ĐỊNH THỊ TRƯỜNG {% endblock title %}
 
 
 {% block stylesheets %}
 
   {{ block.super }}
-  <script src="{% static "js/gauge.js" %}"></script>
-  
+  <script src="{% static "js/gauge.js" %}"></script>   
 
-  
-  
 {% endblock stylesheets %}
 
 {% block content %}
@@ -20,34 +28,571 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Nhận định TT & Đề xuất GD
-    <small>Bạn đang xem cập nhật mới nhất: {{Post_moinhat_1.publish_date|date:"H:i a d/m/y"}}</small>
+    Nhận định Thị trường & Đề xuất Giao dịch
   </h1>
   <ol class="breadcrumb">
-    <li><a href="chienluocgiaodich"><i class="fa fa-home"></i> chienluocGD</a></li>
-    <li class="active">Here</li>
+    <li><i class="fb-like" data-href="https://www.ibrokervn.com" data-layout="button_count" data-ref data-action="like" data-size="small" data-show-faces="true" data-share="false"></i> </li>
+    <li><i class="fa fa-eye"></i>  {{Post_moinhat_1.viewed}} Lượt xem </li>
+    <li class="active"><i class="glyphicon glyphicon-comment"></i>
+    {% block Post_moinhat_1_detail_commentlink %}
+  
+      {% if Post_moinhat_1.allow_comments %}
+          {% if settings.COMMENTS_DISQUS_SHORTNAME %}
+              (<a href="{{ Post_moinhat_1.get_absolute_url }}#disqus_thread"
+                  data-disqus-identifier="{% disqus_id_for Post_moinhat_1 %}">{% spaceless %}
+                  {% trans "Comments" %}
+              {% endspaceless %}</a>)
+          {% else %}<a href="#comments">{% spaceless %}
+              {% blocktrans count comments_count=Post_moinhat_1.comments_count %}{{ comments_count }} Bình luận{% plural %}{{comments_count }} Bình luận{% endblocktrans %}
+              {% endspaceless %}</a>
+          {% endif %}
+      {% endif %}
+    </li>
+{% endblock %}
   </ol>
+
+{% if settings.COMMENTS_DISQUS_SHORTNAME %}
+{% include "generic/includes/disqus_counts.html" %}
+{% endif %}
 </section>
 
 <!-- Main content -->
 <section class="content">
-<div class="row">  <!-- Để co margin trái phải lại -15px -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h1 class="box-title "> {% editable Post_moinhat_1.title %}{{ Post_moinhat_1.title }}{% endeditable %} 
+
+              </h1>
+              <h3 style="margin: 3px;">                    
+                    <small>                 
+                    {% editable Post_moinhat_1.publish_date%}
+                    {% blocktrans with sometime=Post_moinhat_1.publish_date|date:"d/m/y H:i a " %}{{ sometime }}{% endblocktrans %} 
+                    {% endeditable %}  
+                    </small>  
+              <div class= "facebook-share">
+                    <div class="fb-share-button" data-href="https://www.ibrokervn.com/toidautu/nhandinhthitruong/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.ibrokervn.com%2Ftoidautu%2Fnhandinhthitruong%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"></a>
+                    </div>
+                    <div class="zalo-share-button" data-href="" data-oaid="579745863508352884" data-layout="1" data-color="blue" data-customize=false></div>
+
+              </div>           
+              </h3>
+                    
+
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>   
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="content-title" >
+                    NHẬN ĐỊNH THỊ TRƯỜNG
+                  <div class= "facebook-like">
+                  <div class="fb-like" data-href="https://www.ibrokervn.com" data-layout="button_count" data-ref data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>
+                  </div>
+                  </div>
+
+
+                  {% block Post_moinhat_1_detail_content %}
+                  {% editable Post_moinhat_1.content %}
+                  {{ Post_moinhat_1.content|richtext_filters }}
+                  {% endeditable %}
+                  {% endblock %}
+
+                  
+                </div>
+                <!-- /.col -->
+                <div class="col-md-4">
+                  <p class="text-center content-title" >
+                    Đánh giá Thị trường
+                  </p>
+                    <div class="box-body no-padding">  
+                      <!-- gauge.js -->                    
+                      <div >             
+                        <div>  
+                           <div id="preview-textfield"></div>  
+                          <canvas id="gauge" ></canvas>
+                          <div id="cmtTT" >{{ Post_moinhat_1.do_manh }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <script>
+                        var opts1 = {
+                          angle: 0.08, // The span of the gauge arc
+                          lineWidth: 0.44, // The line thickness
+                            radiusScale: 1, // Relative radius
+                          pointer: {
+                            length: 0.6, // // Relative to gauge radius
+                            strokeWidth: 0.035, // The thickness
+                            color: '#000000' // Fill color
+                          },
+                          limitMax: false,     // If false, max value increases automatically if value > maxValue
+                          limitMin: false,     // If true, the min value of the gauge will be fixed
+                          colorStart: '#6FADCF',   // Colors
+                          colorStop: '#23DA2F',    // just experiment with them
+                          strokeColor: '#F2301B',  // to see which ones work best for you
+                          generateGradient: true,
+                          highDpiSupport: true,     // High resolution support
+                          // renderTicks is Optional
+                          renderTicks: {
+                            divisions: 8,
+                            divWidth: 1.2,
+                            divLength: 0.59,
+                            divColor: '#333333',
+                            subDivisions: 4,
+                            subLength: 0.26,
+                            subWidth: 1,
+                            subColor: '#666666'
+                          }
+                        };
+                        var target = document.getElementById('gauge'); // your canvas element
+                        var gauge = new Gauge(target).setOptions(opts1); // create sexy gauge!
+                        gauge.setTextField(document.getElementById("preview-textfield"));
+                        gauge.maxValue = 100; // set max gauge value
+                        gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+                        gauge.animationSpeed = 32; // set animation speed (32 is default value)
+                        gauge.set({{ Post_moinhat_1.Streng }}); // set actual value                  
+                      </script>
+                      <!--NGÀNH DẪN DẮT THỊ TRƯƠNG -->  
+                      {% if Post_moinhat_1.nganhdandattt_set.all %}
+                      <table class="table" style="margin-top: 15px; ">
+                          <thead>
+                            <th style="width: 100px; text-align:center; ">Ngành dẫn dắt TT</th>
+                            <th>Mức độ</th>
+                            <th >CP nổi bật</th>
+                          </thead>
+                          {% for nganh in Post_moinhat_1.nganhdandattt_set.all %}
+                          <tr>
+                            <td>
+                            <span class="badge bg-{{nganh.Mau}}">
+                            {% editable nganh.Nganh %}
+                            {{ nganh.Nganh}}
+                            {% endeditable %}
+                            </span>
+                            </td>
+                            <td>
+                              <div class="progress progress-xs progress-striped active">
+                                <div class="progress-bar progress-bar-{{nganh.Mau}}" style="width:{{nganh.Mucdo}}%"></div>
+                              </div>
+                            </td>
+                            <td>  {% editable nganh.CP_noibat %}{{nganh.CP_noibat}}  {% endeditable %}</td>
+                          </tr>
+                           {% endfor %}
+
+                      </table>
+                      {% endif %}
+
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- ./box-body -->
+            <div class="Recommend-stock">
+              <div class="row">
+                {% if Post_moinhat_1.update_trade_set.all %} 
+
+                    <!-- CỘT TRÁI --> 
+                 <div class="col-md-6" >
+                   <div class="box box-info box-solid">
+                     <div class="box-header with-border">
+                       <h3 class="box-title">ĐẦU TƯ NGẮN HẠN</h3>
+                      </div>
+                     <!-- /.box-header -->
+                    
+              <div class="box-body no-padding">
+             
+                <table class="table table-bordered">
+                  <tr>
+                    <th style="width: 10px; text-align:center;">Stock</th>
+                    <th style="width: 80px; ">Trade</th>
+                    <th style="width: 80px; text-align:center;">Giá KN</th>
+                    <th style="width: 80px; text-align:center;">Cập nhật</th>
+                    <th style="width: 80px; ">Lời/Lỗ</th>
+                    <th style="text-align:center;">Độ mạnh</th>
+                  </tr>
+                  {% for stock in Post_moinhat_1.update_trade_set.all %} 
+                  {% if stock.Stock.Style == "Ngắn hạn" %} 
+                 
+                  <tr>
+                    <td>{{stock.title}}</td>
+                    <td>{{stock.Trade}}</td>
+                    <td style="text-align:center;">{{stock.Price_open}}</td>
+                    <td style="text-align:center;">{{stock.Price_update}}</td>
+
+
+                    <td><i class="fa fa-arrow-up bg-{{stock.Gain_Loss.1}}">
+                     </i> {{stock.Gain_Loss.0}}%</td>
+                
+                    <td style="text-align:center;"><span class="badge bg-blue">{{stock.Indicator}}%</span></td>
+                  </tr>
+                  {% endif %}  
+                  {% endfor %} 
+                  <tr>
+                    <td>ABC</td>
+                    <td><span class="badge bg-light-blue">Bán bớt</span></td>
+                    <td style="text-align:center;"> 22 </td>
+                    <td style="text-align:center;"> 25 </td>
+                    <td><i class="fa fa-arrow-down bg-red"></i> -10% </td>
+
+                    <td style="text-align:center;">    
+                      <span class="badge bg-black">70%</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>STK</td>
+                    <td style="text-align:center;"><span class="badge bg-green">Mua thêm</span></td>
+                    <td style="text-align:center;"> 30 </td>
+                    <td style="text-align:center;"> 37 </td>
+                    <td><i class="fa fa-arrow-up bg-green"></i> 20% </td>
+
+                    <td style="text-align:center;"><span class="badge bg-light-blue">30%</span></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;">HCM</td>
+                    <td><span class="badge bg-red">Cắt lỗ</span></td>
+                    <td style="text-align:center;">  </td>
+                    <td style="text-align:center;">  </td>
+                    <td><i class="fa fa-arrow-up bg-green"></i></td>
+
+                    <td style="text-align:center;"><span class="badge bg-green">90%</span></td>
+                  </tr>
+                </table>
+              </div>
+                     <!-- /.box-body -->              
+                   </div>
+                   <!-- /.box -->
+                 </div>
+                 <!-- /.col -->
+                {% endif %}   
+                  <!-- CỘT PHẢI -->      
+                  <div class="col-md-6" >
+                    <div class="box box-info box-solid">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">ĐẦU TƯ DÀI HẠN</h3>
+                      </div>
+                      <!-- /.box-header -->
+
+              <div class="box-body no-padding">
+                <table class="table table-bordered">
+                  <tr ">
+                    <th style="width: 10px; text-align:center;">Stock</th>
+                    <th style="width: 80px; ">Trade</th>
+                    <th style="width: 80px; text-align:center;">Giá KN</th>
+                    <th style="width: 80px; text-align:center;">Cập nhật</th>
+                    <th style="width: 80px; ">Lời/Lỗ</th>
+                    <th style="text-align:center;">Độ mạnh</th>
+                  </tr>
+                  <tr>
+                    <td>AAA</td>
+                    <td><span class="badge bg-yellow">Mua mới</span></td>
+                    <td style="text-align:center;"> 22  </td>
+                    <td style="text-align:center;"> 25  </td>
+                    <td><i class="fa fa-arrow-up bg-green"></i> 15%  </td>
+                
+                    <td style="text-align:center;"><span class="badge bg-red">55%</span></td>
+                  </tr>
+                  <tr>
+                    <td>ABC</td>
+                    <td><span class="badge bg-light-blue">Bán bớt</span></td>
+                    <td style="text-align:center;"> 22 </td>
+                    <td style="text-align:center;"> 25 </td>
+                    <td><i class="fa fa-arrow-down bg-red"></i> -10% </td>
+
+                    <td style="text-align:center;">    
+                      <span class="badge bg-yellow">70%</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>STK</td>
+                    <td style="text-align:center;"><span class="badge bg-green">Mua thêm</span></td>
+                    <td style="text-align:center;"> 30 </td>
+                    <td style="text-align:center;"> 37 </td>
+                    <td><i class="fa fa-arrow-up bg-green"></i> 20% </td>
+
+                    <td style="text-align:center;"><span class="badge bg-light-blue">30%</span></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;">HCM</td>
+                    <td><span class="badge bg-red">Cắt lỗ</span></td>
+                    <td style="text-align:center;">  </td>
+                    <td style="text-align:center;">  </td>
+                    <td><i class="fa fa-arrow-up bg-green"></i></td>
+
+                    <td style="text-align:center;"><span class="badge bg-green">90%</span></td>
+                  </tr>
+                </table>
+              </div>
+                      <!-- /.box-body -->              
+                    </div>
+                    <!-- /.box -->
+                  </div>
+                  <!-- /.col -->
+                  </div>    
+              </div>
+            </div>    
+              <!-- /.Recommend-stock-->
+
+            <div class="box-footer">
+              <div class="row">
+                {% block Post_moinhat_1_detail_keywords %}
+                {% keywords_for Post_moinhat_1 as tags %}
+                {% if tags %}
+                {% spaceless %}
+                <ul class="list-inline tags">
+                    <li>{% trans "Tags" %}:</li>
+                    {% for tag in tags %}
+                    <li><a href="# tu tu kiem tra lai">{{ tag }}</a>{% if not forloop.last %}, {% endif %}</li>
+                    {% endfor %}
+                </ul>
+                {% endspaceless %}
+                {% endif %}
+                {% endblock %}
+                
+                {% block Post_moinhat_1_detail_rating %}
+                <div class="panel panel-default rating">
+                    <div class="panel-body">
+                    {% rating_for Post_moinhat_1 %}
+                    </div>
+                </div>
+                {% endblock %}
+
+                {% block Post_moinhat_1_detail_sharebuttons %}
+                {% set_short_url_for Post_moinhat_1 %}
+                <a class="btn btn-sm share-twitter" target="_blank" href="https://twitter.com/intent/tweet?url={{                 Post_moinhat_1.short_url|urlencode }}&amp;text={{ Post_moinhat_1.title|urlencode }}">{% trans "Share on Twitter" %}</a>
+                <a class="btn btn-sm share-facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">{% trans "Share on Facebook" %}</a>
+              {% endblock %}
+
+              <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.ibrokervn.com%2Ftoidautu%2Fnhandinhthitruong%2F&width=450&layout=standard&action=like&size=small&show_faces=true&share=true&height=80&appId=1129257863825756" width="450" height="80" style="border:none;overflow:hidden" scrolling="yes" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-footer -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+
+
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Monthly Recap Report</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-wrench"></i></button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </div>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <p class="text-center">
+                    <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
+                  </p>
+
+                  <div class="chart">
+                    <!-- Sales Chart Canvas -->
+                    <canvas id="salesChart" style="height: 180px;"></canvas>
+                  </div>
+                  <!-- /.chart-responsive -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-4">
+                  <p class="text-center">
+                    <strong>Goal Completion</strong>
+                  </p>
+
+                  <div class="progress-group">
+                    <span class="progress-text">Add Products to Cart</span>
+                    <span class="progress-number"><b>160</b>/200</span>
+
+                    <div class="progress sm">
+                      <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
+                    </div>
+                  </div>
+                  <!-- /.progress-group -->
+                  <div class="progress-group">
+                    <span class="progress-text">Complete Purchase</span>
+                    <span class="progress-number"><b>310</b>/400</span>
+
+                    <div class="progress sm">
+                      <div class="progress-bar progress-bar-red" style="width: 80%"></div>
+                    </div>
+                  </div>
+                  <!-- /.progress-group -->
+                  <div class="progress-group">
+                    <span class="progress-text">Visit Premium Page</span>
+                    <span class="progress-number"><b>480</b>/800</span>
+
+                    <div class="progress sm">
+                      <div class="progress-bar progress-bar-green" style="width: 80%"></div>
+                    </div>
+                  </div>
+                  <!-- /.progress-group -->
+                  <div class="progress-group">
+                    <span class="progress-text">Send Inquiries</span>
+                    <span class="progress-number"><b>250</b>/500</span>
+
+                    <div class="progress sm">
+                      <div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
+                    </div>
+                  </div>
+                  <!-- /.progress-group -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- ./box-body -->
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
+                    <h5 class="description-header">$35,210.43</h5>
+                    <span class="description-text">TOTAL REVENUE</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
+                    <h5 class="description-header">$10,390.90</h5>
+                    <span class="description-text">TOTAL COST</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
+                    <h5 class="description-header">$24,813.53</h5>
+                    <span class="description-text">TOTAL PROFIT</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block">
+                    <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+                    <h5 class="description-header">1200</h5>
+                    <span class="description-text">GOAL COMPLETIONS</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-footer -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+
+      </div>
+
+
 <div class="row">  <!-- Để co margin trái phải lại -15px -->
 
 
+          <div class="col-md-6" >
+            <div>
+              <div class="box box-primary box-solid">
+              <div class="box-header with-border" style="height: 50px">
+                <h3 class="box-title">CP ĐẦU TƯ NGẮN HẠN </h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body no-padding">
+                <table class="table table-bordered">
+                  <tr ">
+                    <th style="width: 10px; text-align:center;">Stock</th>
+                    <th style="width: 80px; ">Trade</th>
+                    <th style="width: 80px; text-align:center;">Giá KN</th>
+                    <th style="width: 80px; text-align:center;">Cập nhật</th>
+                    <th style="width: 80px; ">Lời/Lỗ</th>
+                    <th style="text-align:center;">Độ mạnh</th>
+                  </tr>
+                  <tr>
+                    <td>AAA</td>
+                    <td><span class="badge bg-yellow">Mua mới</span></td>
+                    <td style="text-align:center;"> 22  </td>
+                    <td style="text-align:center;"> 25  </td>
+                    <td><i class="fa fa-arrow-up bg-green"></i> 15%  </td>
+                
+                    <td style="text-align:center;"><span class="badge bg-red">55%</span></td>
+                  </tr>
+                  <tr>
+                    <td>ABC</td>
+                    <td><span class="badge bg-light-blue">Bán bớt</span></td>
+                    <td style="text-align:center;"> 22 </td>
+                    <td style="text-align:center;"> 25 </td>
+                    <td><i class="fa fa-arrow-down bg-red"></i> -10% </td>
+
+                    <td style="text-align:center;">    
+                      <span class="badge bg-yellow">70%</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>STK</td>
+                    <td style="text-align:center;"><span class="badge bg-green">Mua thêm</span></td>
+                    <td style="text-align:center;"> 30 </td>
+                    <td style="text-align:center;"> 37 </td>
+                    <td><i class="fa fa-arrow-up bg-green"></i> 20% </td>
+
+                    <td style="text-align:center;"><span class="badge bg-light-blue">30%</span></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;">HCM</td>
+                    <td><span class="badge bg-red">Cắt lỗ</span></td>
+                    <td style="text-align:center;">  </td>
+                    <td style="text-align:center;">  </td>
+                    <td><i class="fa fa-arrow-up bg-green"></i></td>
+
+                    <td style="text-align:center;"><span class="badge bg-green">90%</span></td>
+                  </tr>
+                </table>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+            </div>
+        <!-- /.col 6 -->
+        </div>
   <!-- CỘT TRÁI -->      
   <div class="col-md-6" >
     <div class="box box-info box-solid">
       <div class="box-header with-border">
         <h3 class="box-title">NHẬN ĐỊNH THỊ TRƯỜNG</h3>
+
       </div>
       <!-- /.box-header -->
       <div class="box-body ">  
-        {% block title %}
-        <h4 style="margin-top: 0px;">
+     
+        <h2 style="margin-top: 0px;">
         {% editable Post_moinhat_1.title %}{{ Post_moinhat_1.title }}{% endeditable %}
         </h1>
-        {% endblock %}
+      
         <-- CONTENT -->
       </div>
       <!-- /.box-body -->              
@@ -62,7 +607,7 @@
   <div class="col-md-6" >
     <div class="box box-info box-solid">
       <div class="box-header with-border">
-        <h3 class="box-title">ĐÁNH GIÁ VN INDEX</h3>
+        <h3 class="box-title">ĐẦU TƯ DÀI HẠN</h3>
       </div>
       <!-- /.box-header -->
       <div class="box-body no-padding">  
@@ -79,7 +624,7 @@
 
 
 </div><!-- Kết thúc row -->
-</div><!-- Kết thúc row -->
+
 </section>
 <!-- /.content -->
 

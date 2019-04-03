@@ -62,7 +62,7 @@ class Vimo(models.Model):
         elif So == 1:
             anhhuong = "Tốt"
         else:
-            anhhuong = "~~"
+            anhhuong = "~~~"
         return anhhuong
 
     def anh_huong(self):
@@ -99,6 +99,6 @@ class Vimo(models.Model):
 
 # Theo doi viewed tren cac trang
 class Viewed(models.Model):
-    viewed_list_Vimo = models.IntegerField(default=0)
+    viewed_list_Vimo = models.BigIntegerField(default=0)
 
 

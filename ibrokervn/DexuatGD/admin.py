@@ -104,7 +104,7 @@ Recommend_fieldsets.insert(1, ("Nhận định TT", {
     "fields": ("Streng","content","allow_comments")}))
 Recommend_list_filter = deepcopy(DisplayableAdmin.list_filter) + ("categories",)
 class RecommendAdmin(TweetableAdminMixin, DisplayableAdmin, OwnableAdmin):
-    list_display = ('title','publish_date','user','status','list_of_stock',"admin_link")
+    list_display = ('title','publish_date','user','status','Streng','do_manh','list_of_stock','viewed',"admin_link")
     def list_of_stock(self, obj):
         return ("%s" % ','.join([name.title for name in obj.Stock_chosen.all()]))
     list_of_stock.short_description = 'list_stock_daily'
