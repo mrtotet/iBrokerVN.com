@@ -19,12 +19,13 @@ from django.utils.translation import ugettext_lazy as _
 
 # Controls the ordering and grouping of the admin menu.
 #
-# ADMIN_MENU_ORDER = (
-#     ("Content", ("pages.Page", "blog.BlogPost",
-#        "generic.ThreadedComment", (_("Media Library"), "media-library"),)),
-#     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
-#     ("Users", ("auth.User", "auth.Group",)),
-# )
+ADMIN_MENU_ORDER = (
+    ("Content", ("pages.Page", "blog.BlogPost",
+       "generic.ThreadedComment", (_("Media Library"), "media-library"),)),
+    ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
+    ("Users", ("auth.User", "auth.Group",)),
+    ("Category", ("DexuatGD.Recommend_Category",)),
+)
 
 # A three item sequence, each containing a sequence of template tags
 # used to render the admin dashboard.
@@ -79,7 +80,7 @@ from django.utils.translation import ugettext_lazy as _
 
 # Setting to turn on featured images for blog posts. Defaults to False.
 #
-# BLOG_USE_FEATURED_IMAGE = True
+BLOG_USE_FEATURED_IMAGE = True
 
 # If True, the django-modeltranslation will be added to the
 # INSTALLED_APPS setting.
@@ -92,7 +93,7 @@ USE_MODELTRANSLATION = False
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ibrokervn.com', 'localhost', '127.0.0.1']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -132,8 +133,16 @@ USE_THOUSAND_SEPARATOR = True
 
 USE_I18N = False
 
-AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
+AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",
+                           'social_core.backends.open_id.OpenIdAuth',
+                           'social_core.backends.google.GoogleOpenId',
+                           'social_core.backends.google.GoogleOAuth2',
+                           'social_core.backends.google.GoogleOAuth',
 
+                            'social_core.backends.facebook.FacebookOAuth2',
+                           )
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 # The numeric mode to set newly-uploaded files to. The value should be
 # a mode you'd pass directly to os.chmod.
 FILE_UPLOAD_PERMISSIONS = 0o644
@@ -215,6 +224,9 @@ TEMPLATES = [
                 "django.template.context_processors.tz",
                 "mezzanine.conf.context_processors.settings",
                 "mezzanine.pages.context_processors.page",
+
+                'social_django.context_processors.backends',  # <--
+                'social_django.context_processors.login_redirect',  # <--
             ],
             "builtins": [
                 "mezzanine.template.loader_tags",
@@ -265,12 +277,11 @@ INSTALLED_APPS = (
     "Pages",
     "mezzanine.core",
     "toidautu",
-
-
-
+    'social_django',
     #"mezzanine.mobile",
 
-)
+    )
+
 
 # List of middleware classes to use. Order is important; in the request phase,
 # these middleware classes will be applied in the order given, and in the
@@ -281,6 +292,7 @@ MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     # Uncomment if using internationalisation or localisation
     # 'django.middleware.locale.LocaleMiddleware',
+    "social_django.middleware.SocialAuthExceptionMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -294,6 +306,10 @@ MIDDLEWARE = (
     "mezzanine.core.middleware.SitePermissionMiddleware",
     "mezzanine.pages.middleware.PageMiddleware",
     "mezzanine.core.middleware.FetchFromCacheMiddleware",
+
+
+
+
 )
 
 if DJANGO_VERSION < (1, 10):
@@ -365,4 +381,54 @@ FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 
 RATINGS_ACCOUNT_REQUIRED = True
+
+COMMENTS_ACCOUNT_REQUIRED = True
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_SCOPE = True
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+'https://www.googleapis.com/auth/userinfo.email',
+'https://www.googleapis.com/auth/userinfo.profile'
+]
+
+SOCIAL_AUTH_GOOGLE_PLUS_IGNORE_DEFAULT_SCOPE = True
+SOCIAL_AUTH_GOOGLE_PLUS_SCOPE = [
+'https://www.googleapis.com/auth/plus.login',
+'https://www.googleapis.com/auth/userinfo.email',
+'https://www.googleapis.com/auth/userinfo.profile'
+]
+# Force https redirect
+SECURE_SSL_REDIRECT = False
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# Force HTTPS in the final URIs
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '141566251852-02drioul9r2il5ov7fo4feshnhg3n7pc.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'u1fhHhjqEjHh1ilD6f4ae5y2'
+
+
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '759846494409715' # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'c420f46457196d3b32eecb8c843c3621'
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link']
+
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {  # add this
+    'fields': 'id, name, email, picture.type(large), link'
+        }
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [  # add this
+                                 ('name', 'name'),
+                                 ('email', 'email'),
+                                 ('picture', 'picture'),
+                                 ('link', 'profile_url'),
+                                 ]
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
+
+ACCOUNTS_VERIFICATION_REQUIRED = True
+
 

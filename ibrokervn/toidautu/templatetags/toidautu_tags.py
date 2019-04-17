@@ -1,4 +1,16 @@
-from django import template
+from __future__ import unicode_literals
+from datetime import datetime
+
+from django.contrib.auth import get_user_model
+from django.db.models import Count, Q
+from django.utils import timezone
+
+
+from mezzanine.generic.models import Keyword
+from mezzanine import template
+
+User = get_user_model()
+
 register = template.Library()
 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -61,10 +73,50 @@ def TKgdnn():
 
     return context
 
-from DexuatGD.models import Recommend
+from DexuatGD.models import Recommend, Recommend_Category
 
 @register.simple_tag
 def linkrecommendmoinhat():
     Nhandinh_posts = Recommend.objects.published()
     Post_moinhat_1 = Nhandinh_posts.latest('publish_date')
     return Post_moinhat_1
+
+@register.as_tag
+def Nhandinh_months(*args):
+    """
+    Put a list of dates for blog posts into the template context.
+    """
+    dates = Recommend.objects.published().values_list("publish_date", flat=True)
+    tz = timezone.get_current_timezone()
+    dates = [d.astimezone(tz) for d in dates]
+    date_dicts = [{"date": datetime(d.year, d.month, 1)} for d in dates]
+    month_dicts = []
+    for date_dict in date_dicts:
+        if date_dict not in month_dicts:
+            month_dicts.append(date_dict)
+    for date_dict in month_dicts:
+        date_dict["Nhandinh_count"] = date_dicts.count(date_dict)
+    return month_dicts
+
+
+@register.as_tag
+def Nhanhdinh_categories(*args):
+    """
+    Put a list of categories for blog posts into the template context.
+    """
+    posts = Recommend.objects.published()
+    categories = Recommend_Category.objects.filter(Recommends__in=posts)
+    return list(categories.annotate(post_count=Count("Recommends")))
+
+@register.as_tag
+def nhandinh_authors(*args):
+    """
+    Put a list of authors (users) for blog posts into the template context.
+    """
+    blog_posts = Recommend.objects.published()
+    authors = User.objects.filter(recommends__in=blog_posts)
+    return list(authors.annotate(post_count=Count("blogposts")))
+
+
+
+

@@ -17,12 +17,12 @@ urlpatterns = i18n_patterns(
     # Change the admin prefix here to use an alternate URL for the
     # admin interface, which would be marginally more secure.
     url("^admin/", include(admin.site.urls)),
-    url(r'^toidautu/giaodichNN/', include('GDNN.urls')),
-    url(r'^toidautu/thongtinvimo/', include('Vimo.urls')),
-    url(r'^toidautu/', include('DexuatGD.urls',namespace='nhandinhthitruong',app_name='DexuatGD'))
-
-)
-
+    url(r'^toidautu/giaodichNN/', include('GDNN.urls',namespace='giaodichNN',app_name='GDNN')),
+    url(r'^toidautu/thongtinvimo/', include('Vimo.urls',namespace='thongtinvimo',app_name='Vimo')),
+    url(r'^toidautu/', include('DexuatGD.urls',namespace='nhandinhthitruong',app_name='DexuatGD')),
+    url(r'^auth/',include('social_django.urls', namespace='social')),
+    url(r'^auth/', include('django.contrib.auth.urls', namespace='auth'))
+               )
 urlpatterns += [
 
     # We don't want to presume how your homepage works, so here are a
@@ -74,7 +74,7 @@ urlpatterns += [
     # from it, and use them directly below instead of using
     # ``mezzanine.urls``.
     url("^", include("mezzanine.urls")),
-    url(r'^', include('GDNN.urls', namespace='GDNN')),
+
 
     # MOUNTING MEZZANINE UNDER A PREFIX
     # ---------------------------------

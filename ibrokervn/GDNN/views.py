@@ -13,6 +13,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 data =[1, 2, 3]
 class UploadFileForm(forms.Form):
     file = forms.FileField()
+
 @staff_member_required
 def import_GDNN(request):
     if request.method == "POST":

@@ -145,9 +145,7 @@ class RecommendCategoryAdmin(BaseTranslationModelAdmin):
     Admin class for blog categories. Hides itself from the admin menu
     unless explicitly specified.
     """
-
-    fieldsets = ((None, {"fields": ("title",)}),)
-
+    list_display = ('title',)
     def has_module_permission(self, request):
         """
         Hide from the admin menu unless explicitly set in ``ADMIN_MENU_ORDER``.

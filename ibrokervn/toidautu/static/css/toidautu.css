@@ -71,3 +71,126 @@
       display: block; 
       top: -6px; 
       }
+
+#comments, .rating {
+  margin:20px 0;
+}
+.rating span, .rating form {
+  display: inline-block;
+}
+.rating ul {
+  padding-left: 0;
+  list-style: none;
+}
+.rating li {
+  display: inline-block;
+  margin: 0 5px;
+}
+.comment .rating {
+  margin-top: 5px;
+}
+.comment-author {
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  padding: 15px;
+  margin-bottom: 30px;
+  background-color: #FEFFEE;
+}
+
+.blog .blog-item {
+  background-color: #fff;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.blog .blog-item .img-blog {
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+}
+.blog .blog-item .blog-content {
+  padding: 20px;
+}
+.blog .blog-item h3 {
+  margin-top: 0;
+} 
+.blog .blog-item .entry-meta {
+  margin-bottom: 20px;
+}
+.blog .blog-item .entry-meta > span {
+  display: inline-block;
+  color: #999;
+  margin-right: 10px;
+  font-size: 12px;
+}
+.blog .blog-item .entry-meta > span a {
+  color: #999;
+}
+ul.pagination > li > a {
+  border: 0;
+}
+ul.pagination > li.active > a,
+ul.pagination > li:hover > a {
+  background-color: #34495e;
+  color: #fff;
+}
+textarea#message {
+  padding: 10px 15px;
+  height: 219px;
+}
+.widget {
+  margin-bottom: 30px;
+}
+ul.gallery {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+ul.gallery li {
+  display: block;
+  width: 60px;
+  padding: 0;
+  margin: 0 4px 4px 0;
+  float: left;
+}
+ul.faq {
+  list-style: none;
+  margin: 0;
+}
+ul.faq li {
+  margin-top: 30px;
+}
+ul.faq li:first-child {
+  margin-top: 0;
+}
+ul.faq li span.number {
+  display: block;
+  float: left;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background: #34495e;
+  color: #fff;
+  font-size: 24px;
+}
+ul.faq li > div {
+  margin-left: 70px;
+}
+ul.faq li > div h3 {
+  margin-top: 0;
+}
+#error {
+  text-align: center;
+  margin-top: 150px;
+  margin-bottom: 150px;
+}
+
+.navbar-header img {
+  margin-top:-10px;
+}
+
+
+body {
+  color: #34495e;
+}
+

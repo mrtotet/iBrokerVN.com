@@ -1,4 +1,8 @@
+from __future__ import unicode_literals
+from future.builtins import str
 from django.db import models
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 from django.db import models
@@ -71,11 +75,8 @@ class Stock_Detail(models.Model):
 
 
 class Estimate (models.Model):
-
     POSITION_CHOICES = (  ('open', 'Mở vị thế GD'),
                         ('Close', 'Đóng vị thế GD')       )
-
-
     STYLE_CHOICES =             (   ('Dài hạn', 'Dài hạn'),
                                 ('Ngắn hạn', 'Ngắn hạn'),
                              )
@@ -84,7 +85,6 @@ class Estimate (models.Model):
     #DateRecommend =     models.ForeignKey(Recommend, on_delete=models.CASCADE, blank= True , null= True)
     author =            models.ForeignKey(User, blank=True, null=True,related_name='author', on_delete=models.CASCADE)
     publish =           models.DateTimeField(default=timezone.now, blank=True, null=True)
-
     S_created =         models.DateTimeField(auto_now_add=True,null=True)
     S_updated =         models.DateTimeField(auto_now=True,null=True)
     S_status =          models.CharField(max_length=10,
@@ -125,7 +125,6 @@ class Estimate (models.Model):
     Price_change_5days=     models.IntegerField("Giá thay đổi 5 ngày",null=True, blank=True)
     Price_change_20days=    models.IntegerField("Giá thay đổi 20 ngày",null=True, blank=True)
     Price_change_60days=    models.IntegerField("Giá thay đổi 60 ngày",null=True, blank=True)
-
     EnvironmentIndustry =   models.IntegerField("Mô trường kinh doanh",default=7,null=True, blank=True, validators = [MaxValueValidator(10),MinValueValidator(0)],help_text='0-10')
     W_Envi =                models.PositiveIntegerField("Tỷ trọng",default=20, null=True, blank=True,help_text='mặc định chuẩn, có thể thay đổi khi cần thiết')
     Management =            models.IntegerField("Quản trị Doanh Nghiệp",default=7, null=True, blank=True, validators = [MaxValueValidator(10),MinValueValidator(0)],help_text='0-10')
@@ -214,12 +213,13 @@ class Recommend(Displayable, Ownable, RichText, AdminThumbMixin):
         return self.sohoa(self.Streng)
 
     categories = models.ManyToManyField("Recommend_Category",
-                                        verbose_name="Categories",
                                         blank=True, related_name="Recommends")
     allow_comments = models.BooleanField(verbose_name="Allow comments",
                                          default=True)
     comments = CommentsField(verbose_name="Còn bạn nhận định thế nào về TT ?")
     rating = RatingField(verbose_name="Rating")
+    related_posts = models.ManyToManyField("self",
+                                 verbose_name=_("Related posts"), blank=True)
     viewed = models.IntegerField(default=0)
     def get_absolute_url(self):
         """
@@ -246,7 +246,6 @@ class Recommend(Displayable, Ownable, RichText, AdminThumbMixin):
                 if date_part == settings.BLOG_URLS_DATE_FORMAT:
                     break
         return reverse(url_name, kwargs=kwargs)
-
     class Meta:
         verbose_name = "Recommend"
         verbose_name_plural = "Recommends"
@@ -258,15 +257,14 @@ class Recommend_Category(Slugged):
     """
     A category for grouping blog posts into a series.
     """
-
     class Meta:
-        verbose_name = "Recommend Category"
-        verbose_name_plural = "Recommend Categorys"
+        verbose_name = _("Recommend Category")
+        verbose_name_plural = _("Recommend Categories")
         ordering = ("title",)
-
     @models.permalink
     def get_absolute_url(self):
-        return ("Recommend_list_category", (), {"category": self.slug})
+        return ("nhandinhthitruong:NhandinhTT_DexuatGD_list_category", (), {"category": self.slug})
+
 
 """    
 Class TamlythitruongNgay (models.Model):
@@ -318,7 +316,7 @@ class Update_Trade (models.Model):
     Stock =       models.ForeignKey(Estimate,related_name='estimate',unique = True, on_delete=models.CASCADE)
     DateRecommend = models.ForeignKey(Recommend, on_delete=models.CASCADE, blank=True, null=True)
     GD_CHOICES =             (   ('Mua mới', 'Mua mới'),
-                                ('Buy_More', 'Mua thêm'),
+                                ('Mua thêm', 'Mua thêm'),
                                 ('Nắm  giữ', 'Nắm  giữ'),
                                 ('Chốt lời', 'Chốt lời'),
                                 ('Cắt lỗ', 'Cắt lỗ'),
@@ -327,6 +325,27 @@ class Update_Trade (models.Model):
     Trade=                  models.CharField(max_length=10,
                                         choices=GD_CHOICES,
                                              blank=True,null=True)
+
+    @staticmethod
+    def color_trade(a):
+        if a == 'Mua mới':
+            color = "green"
+        elif a == 'Mua thêm':
+            color = "lime"
+        elif a == 'Nắm  giữ':
+            color = "yellow"
+        elif a == 'Chốt lời':
+            color = "blue"
+        elif a == 'Cắt lỗ':
+            color = "red"
+        elif a == 'Bán bớt':
+            color = "gold"
+        else:
+            color = "violet"
+        return color
+    def Color_Trade(self):
+        return self.color_trade(self.Trade)
+
     Price_open=             models.IntegerField("Giá mở vị thế",default=1,null=True, blank=True)
     Price_update=           models.IntegerField("Giá cập nhật",default=1,null=True, blank=True)
     Indicator =             models.IntegerField(default=50, null=True, blank=True, validators = [MaxValueValidator(100),MinValueValidator(0)])
@@ -338,12 +357,14 @@ class Update_Trade (models.Model):
         return Cal
 
     def Gain_Loss(self):
-        gain_loss = self.Cal_Gain_loss(self.Price_open, self.Price_update)
+        gain_loss = int(self.Cal_Gain_loss(self.Price_open, self.Price_update))
         if gain_loss >=0 :
             color = "green"
+            change = "up"
         else:
             color = "red"
-        return gain_loss,color
+            change = "down"
+        return gain_loss,color, change
 
 
 

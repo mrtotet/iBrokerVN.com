@@ -2,22 +2,27 @@
 {% load toidautu_tags %}
 {% load mezzanine_tags comment_tags keyword_tags rating_tags i18n disqus_tags %}
 {% load staticfiles %}
-{% block meta_title %}{{ Nhandinh_posts.meta_title }}{% endblock %}
+{% block meta_title %}{{ Post_moinhat_1.meta_title }}{% endblock %}
 
 {% block meta_keywords %}{% metablock %}
-{% keywords_for Nhandinh_posts as tags %}
+{% keywords_for Post_moinhat_1 as tags %}
 {% for tag in tags %}{% if not forloop.first %}, {% endif %}{{ tag }}{% endfor %}
 {% endmetablock %}{% endblock %}
 
 {% block meta_description %}{% metablock %}
-{{ Nhandinh_posts.description }}
+{{ Post_moinhat_1.description }}
 {% endmetablock %}{% endblock %}
 
 {% block title %} NHẬN ĐỊNH THỊ TRƯỜNG {% endblock title %}
+
+
 {% block stylesheets %}
+
   {{ block.super }}
   <script src="{% static "js/gauge.js" %}"></script>   
+
 {% endblock stylesheets %}
+
 {% block content %}
 
 <!-- Content Header (Page header) -->
@@ -26,7 +31,7 @@
     Nhận định Thị trường & Đề xuất Giao dịch
   </h1>
   <ol class="breadcrumb">
-    <li><i class="fa fa-eye"></i>  {{Nhandinh_posts.viewed}} Lượt xem </li>
+    <li><i class="fa fa-eye"></i>  {{Post_moinhat_1.viewed}} Lượt xem </li>
  
   </ol>
 
@@ -40,40 +45,41 @@
 
       <div class="row">
         <div class="col-md-12">
+
           <div class="box">
             <div class="box-header with-border">
-                          <div class="box-tools pull-right">
+
+              <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>   
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
-              
-      <div class="blog">  
+
+                   <div class="blog">  
                  <div class="blog-item">
-     {% if settings.BLOG_USE_FEATURED_IMAGE and Nhandinh_posts.featured_image %}
-      {% block Nhandinh_posts_list_post_featured_image %}
-      <a href="{{ Nhandinh_posts.get_absolute_url }}">
-        <img width="100%" class="img-responsive img-blog" src="{{ MEDIA_URL }}{{ Nhandinh_posts.featured_image }}">
+     {% if settings.BLOG_USE_FEATURED_IMAGE and Post_moinhat_1.featured_image %}
+      {% block Post_moinhat_1_list_post_featured_image %}
+      <a href="{{ Post_moinhat_1.get_absolute_url }}">
+        <img width="100%" class="img-responsive img-blog" src="{{ MEDIA_URL }}{{ Post_moinhat_1.featured_image }}">
       </a>
       {% endblock %}
       {% endif %}
           <div class="blog-content">      
-  {% block Nhandinh_posts_list_post_title %}  
-    {% editable Nhandinh_posts.title %}
-    <a><h3>{{ Nhandinh_posts.title }}</h3></a>
+  {% block Post_moinhat_1_list_post_title %}  
+    {% editable Post_moinhat_1.title %}
+    <a><h3>{{ Post_moinhat_1.title }}</h3></a>
     {% endeditable %}
   {% endblock %}      
-
-{% block Nhandinh_posts_list_post_metainfo %}
-{% editable Nhandinh_posts.publish_date %}
+{% block Post_moinhat_1_list_post_metainfo %}
+{% editable Post_moinhat_1.publish_date %}
    
                    <div class="entry-meta">
-                                <span><i class="icon-user"></i> {% with Nhandinh_posts.user as author %}
+                                <span><i class="icon-user"></i> {% with Post_moinhat_1.user as author %}
                 <a href="{% url "nhandinhthitruong:NhandinhTT_DexuatGD_list_author" author %}">{{ author.get_full_name|default:author.username }}</a>
                 {% endwith %}
                 </span>
                 <span><i class="icon-folder-close"></i>
-                                {% with Nhandinh_posts.categories.all as categories %}
+                                {% with Post_moinhat_1.categories.all as categories %}
                 {% if categories %}
                 {% trans "chuyên mục" %}
                 {% for category in categories %}
@@ -83,17 +89,17 @@
                 {% endif %}
                 {% endwith %}                                
                                 </span>
-                                <span><i class="icon-calendar"></i> {% blocktrans with sometime=Nhandinh_posts.publish_date|timesince %}{{ sometime }} {% endblocktrans %}</span>
+                                <span><i class="icon-calendar"></i> {% blocktrans with sometime=Post_moinhat_1.publish_date|timesince %}{{ sometime }} {% endblocktrans %}</span>
                                 <span><i class="icon-comment"></i> 
-                                {% if Nhandinh_posts.allow_comments %}              
+                                {% if Post_moinhat_1.allow_comments %}              
                   {% if settings.COMMENTS_DISQUS_SHORTNAME %}
-                  <a href="{{ Nhandinh_posts.get_absolute_url }}#disqus_thread"
-                    data-disqus-identifier="{% disqus_id_for Nhandinh_posts %}">
+                  <a href="{{ Post_moinhat_1.get_absolute_url }}#disqus_thread"
+                    data-disqus-identifier="{% disqus_id_for Post_moinhat_1 %}">
                     {% trans "Comments" %}
                   </a>
                   {% else %}
-                  <a href="{{ Nhandinh_posts.get_absolute_url }}#comments">
-                    {% blocktrans count comments_count=Nhandinh_posts.comments_count %}{{ comments_count }} comment{% plural %}{{ comments_count }} nhận định khác{% endblocktrans %}
+                  <a href="{{ Post_moinhat_1.get_absolute_url }}#comments">
+                    {% blocktrans count comments_count=Post_moinhat_1.comments_count %}{{ comments_count }} comment{% plural %}{{ comments_count }} nhận định khác{% endblocktrans %}
                   </a>
                   {% endif %}
                   {% endif %}                           
@@ -102,16 +108,16 @@
 {% endeditable %}
 
 {% endblock %}
-
               <div class= "facebook-share">
-                    <div class="fb-share-button" data-href="https://www.ibrokervn.com{{Nhandinh_posts.get_absolute_url}}" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.ibrokervn.com%2Ftoidautu%2Fnhandinhthitruong%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"></a>
+                    <div class="fb-share-button" data-href="https://www.ibrokervn.com{{Post_moinhat_1.get_absolute_url}}" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.ibrokervn.com%2Ftoidautu%2Fnhandinhthitruong%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"></a>
                     </div>
-                    <div class="zalo-share-button" data-href="https://www.ibrokervn.com{{Nhandinh_posts.get_absolute_url}}" data-oaid="579745863508352884" data-layout="1" data-color="blue" data-customize=false></div>
+                    <div class="zalo-share-button" data-href="" data-oaid="579745863508352884" data-layout="1" data-color="blue" data-customize=false></div>
 
-              </div>      
-              </div>
-  
-  
+              </div>           
+              </h3>
+                    
+
+
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -120,18 +126,18 @@
                   <div class="content-title" >
                     NHẬN ĐỊNH THỊ TRƯỜNG
                   <div class= "facebook-like">
-                  <div class="fb-like" data-href="https://www.ibrokervn.com{{Nhandinh_posts.get_absolute_url}}" data-layout="button_count" data-ref data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>
+                  <div class="fb-like" data-href="https://www.ibrokervn.com{{Post_moinhat_1.get_absolute_url}}" data-layout="button_count" data-ref data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>
                   </div>
                   </div>
 
 
-                  {% block Nhandinh_posts_detail_content %}
-                  {% editable Nhandinh_posts.content %}
-                  {{ Nhandinh_posts.content|richtext_filters }}
+                  {% block Post_moinhat_1_detail_content %}
+                  {% editable Post_moinhat_1.content %}
+                  {{ Post_moinhat_1.content|richtext_filters }}
                   {% endeditable %}
                   {% endblock %}
 
-
+                  
                 </div>
                 <!-- /.col -->
                 <div class="col-md-4">
@@ -144,7 +150,7 @@
                         <div>  
                            <div id="preview-textfield"></div>  
                           <canvas id="gauge" ></canvas>
-                          <div id="cmtTT" >{{ Nhandinh_posts.do_manh }}</div>
+                          <div id="cmtTT" >{{ Post_moinhat_1.do_manh }}</div>
                         </div>
                       </div>
                     </div>
@@ -183,17 +189,17 @@
                         gauge.maxValue = 100; // set max gauge value
                         gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
                         gauge.animationSpeed = 32; // set animation speed (32 is default value)
-                        gauge.set({{ Nhandinh_posts.Streng }}); // set actual value                  
+                        gauge.set({{ Post_moinhat_1.Streng }}); // set actual value                  
                       </script>
                       <!--NGÀNH DẪN DẮT THỊ TRƯƠNG -->  
-                      {% if Nhandinh_posts.nganhdandattt_set.all %}
+                      {% if Post_moinhat_1.nganhdandattt_set.all %}
                       <table class="table" style="margin-top: 15px; ">
                           <thead>
                             <th style="width: 100px; text-align:center; ">Ngành dẫn dắt TT</th>
                             <th>Mức độ</th>
                             <th >CP nổi bật</th>
                           </thead>
-                          {% for nganh in Nhandinh_posts.nganhdandattt_set.all %}
+                          {% for nganh in Post_moinhat_1.nganhdandattt_set.all %}
                           <tr>
                             <td>
                             <span class="badge bg-{{nganh.Mau}}">
@@ -222,7 +228,7 @@
             <!-- ./box-body -->
             <div class="Recommend-stock">
               <div class="row">
-                {% if Nhandinh_posts.update_trade_set.all %} 
+                {% if Post_moinhat_1.update_trade_set.all %} 
 
                     <!-- CỘT TRÁI --> 
                  <div class="col-md-6" >
@@ -243,7 +249,7 @@
                     <th style="width: 80px; ">Lời/Lỗ</th>
                     <th style="text-align:center;">Độ mạnh</th>
                   </tr>
-                  {% for stock in Nhandinh_posts.update_trade_set.all %} 
+                  {% for stock in Post_moinhat_1.update_trade_set.all %} 
                   {% if stock.Stock.Style == "Ngắn hạn" %} 
                  
                   <tr>
@@ -287,7 +293,7 @@
                     <th style="width: 80px; ">Lời/Lỗ</th>
                     <th style="text-align:center;">Độ mạnh</th>
                   </tr>
-                  {% for stock in Nhandinh_posts.update_trade_set.all %} 
+                  {% for stock in Post_moinhat_1.update_trade_set.all %} 
                   {% if stock.Stock.Style == 'Dài hạn' %} 
                   <tr>
                     <td>{{stock.title}}</td>
@@ -319,8 +325,8 @@
 
             <div class="box-footer">
               <div class="row">
-                {% block Nhandinh_posts_detail_keywords %}
-                {% keywords_for Nhandinh_posts as tags %}
+                {% block Post_moinhat_1_detail_keywords %}
+                {% keywords_for Post_moinhat_1 as tags %}
                 {% if tags %}
                 {% spaceless %}
                 <ul class="list-inline tags">
@@ -332,41 +338,11 @@
                 {% endspaceless %}
                 {% endif %}
                 {% endblock %}
-                                {% block Nhandinh_posts_previous_next %}
-                <ul class="pager">
-                {% with Nhandinh_posts.get_previous_by_publish_date as previous %}
-                {% if previous %}
-                <li class="previous">
-                    <a href="{{ previous.get_absolute_url }}">&larr; {{ previous }}</a>
-                </li>
-                {% endif %}
-                {% endwith %}
-                {% with Nhandinh_posts.get_next_by_publish_date as next %}
-                {% if next %}
-                <li class="next">
-                    <a href="{{ next.get_absolute_url }}">{{ next }} &rarr;</a>
-                </li>
-                {% endif %}
-                {% endwith %}
-                </ul>
-                {% endblock %}
                 
-                {% block Nhandinh_posts_detail_related_posts %}
-                {% if related_posts %}
-                <div id="related-posts">
-                <h3>{% trans 'Related posts' %}</h3>
-                <ul class="list-unstyled">
-                {% for post in related_posts %}
-                     <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-                {% endfor %}
-                </ul>
-                </div>
-                {% endif %}
-                {% endblock %}                  
-                {% block Nhandinh_posts_detail_rating %}
+                {% block Post_moinhat_1_detail_rating %}
                 <div class="panel panel-default rating">
                     <div class="panel-body">
-                    {% rating_for Nhandinh_posts %}
+                    {% rating_for Post_moinhat_1 %}
                     </div>
                 </div>
                 {% endblock %}
@@ -378,7 +354,10 @@
           <!-- /.box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-12">
+
+
+
+       <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">NHẬN ĐỊNH THỊ TRƯỜNG CỦA BẠN</h3>
@@ -405,30 +384,9 @@
               <div class="row">
 
 
-{% block Nhandinh_posts_detail_comments %}
-{% if Nhandinh_posts.allow_comments %}{% comments_for Nhandinh_posts %}{% endif %}
+{% block Post_moinhat_1_detail_comments %}
+{% if Post_moinhat_1.allow_comments %}{% comments_for Post_moinhat_1 %}{% endif %}
 {% endblock %}
-
-
-              </div>
-              <!-- /.row -->
-            </div>
-            <!-- ./box-body -->
-            <div class="box-footer">
-              <div class="row">
-
-
-              <!-- /.row -->
-            </div>
-            <!-- /.box-footer -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-
-      </div>
-
-
 
 
 

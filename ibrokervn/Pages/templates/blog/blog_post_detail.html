@@ -1,26 +1,20 @@
 {% extends "blog/blog_post_list.html" %}
 {% load mezzanine_tags comment_tags keyword_tags rating_tags i18n disqus_tags %}
-
-{% block meta_title %}{{ blog_post.meta_title }}{% endblock %}
-
+{% block meta_title %}{{ page.meta_title }}{% endblock %}
 {% block meta_keywords %}{% metablock %}
 {% keywords_for blog_post as tags %}
 {% for tag in tags %}{% if not forloop.first %}, {% endif %}{{ tag }}{% endfor %}
 {% endmetablock %}{% endblock %}
-
 {% block meta_description %}{% metablock %}
 {{ blog_post.description }}
 {% endmetablock %}{% endblock %}
-
 {% block title %}
 {% editable blog_post.title %}{{ blog_post.title }}{% endeditable %}
 {% endblock %}
-
 {% block breadcrumb_menu %}
 {{ block.super }}
 <li class="active">{{ blog_post.title }}</li>
 {% endblock %}
-
 {% block main %}
 <section id="blog" class="container">
 	<div class="row">
@@ -82,16 +76,17 @@
 
 
 
-{% block blog_post_list_post_content %}
+{% block blog_post_detail_content %}
 {% editable blog_post.content %}
-{{ blog_post.description_from_content|safe }}
+{{ blog_post.content|richtext_filters }}
 {% endeditable %}
 {% endblock %}
 
- <a href="{{ blog_post.get_absolute_url }}"  class="btn btn-default">{% trans "read more" %} <i class="icon-angle-right"> </i></a>
-{% block blog_post_list_post_links %}
+
+{% block blog_post_detail_keywords %}
 {% keywords_for blog_post as tags %}
-    {% if tags %}
+{% if tags %}
+
 <div class="tags">
   <i class="icon-tags"></i> {% trans "Tags" %}:
     {% spaceless %}

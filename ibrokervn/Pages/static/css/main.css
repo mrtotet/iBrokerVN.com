@@ -713,6 +713,9 @@ ul.tag-cloud li {
 .navbar-inverse {
   border: none;
 }
+#navbar {
+  top : 0px;
+}
 .navbar-inverse .navbar-brand {
   font-family: 'Bubbler One', sans-serif;
   font-size: 36px;
@@ -1026,7 +1029,7 @@ ul.social > li > a:hover {
 }
 .blog .blog-item h3 {
   margin-top: 0;
-}
+} 
 .blog .blog-item .entry-meta {
   margin-bottom: 20px;
 }
@@ -1102,4 +1105,10 @@ ul.faq li > div h3 {
 .navbar-header img {
   margin-top:-10px;
 }
+
+#gototop {
+  position: fixed;
+  bottom:0px;
+}
+
 

@@ -126,14 +126,26 @@
           <span class="hidden-xs">{{request.user}}</span>
         </a>
         <ul class="dropdown-menu">
+          {% for ass in backends.associated %}
+          {% if ass.provider == 'facebook' %}
           <!-- The user image in the menu -->
           <li class="user-header">
-            <img src="{% static "img/user.png" %}" class="img-circle" alt="User Image">
-            <p>
-              Lê Ngọc Khôi - Financial Advisor
-              <small>Member since Nov. 2007</small>
-            </p>
+            <img src="{{ass.extra_data.picture.data.url}}" class="img-circle" alt="User Image">
+            <p> Name:  {{ ass.extra_data.name }} </p>
+            <p> Đăng nhập qua: <a href="{{ass.extra_data.profile_url}}">{{ ass.provider }}</a> </p>
           </li>
+          {% endif %}
+          {% if ass.provider == 'google-oauth2' %}
+          <!-- The user image in the menu -->
+          <li class="user-header">
+
+            <img src="{% gravatar_url ass.uid %}" class="img-circle" alt="User Image">
+            <p> Name:  {{ ass.extra_data.name }} </p>
+            <p> Đăng nhập qua: <a href="{{ass.extra_data.profile_url}}">Google</a> </p>
+
+          </li>
+          {% endif %}
+          {% endfor %}
           <!-- Menu Body -->
           <li class="user-body">
             <div class="row">
